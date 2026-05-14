@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questionnaire – Parties intéressées pertinentes (ISO 9001:2015 – §4.2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Roboto', sans-serif; background: #f0ebf8; min-height: 100vh; padding: 0 0 60px; color: #202124; }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+
+  /* HEADER */
+  .header-card { background: white; border-radius: 0 0 8px 8px; border-top: 10px solid #673ab7; margin-bottom: 12px; overflow: hidden; box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12); }
+  .header-content { padding: 24px; }
+  .form-title { font-family: 'Google Sans', sans-serif; font-size: 30px; font-weight: 400; color: #202124; line-height: 1.2; margin-bottom: 6px; }
+  .form-title-ar { font-size: 26px; color: #000; direction: rtl; text-align: right; margin-bottom: 16px; }
+  .form-subtitle { font-size: 13px; color: #666; border-top: 1px solid #e0e0e0; padding-top: 12px; margin-top: 12px; }
+  .required-note { font-size: 13px; color: #d93025; margin-top: 6px; }
+
+  /* CARDS */
+  .section-card { background: white; border-radius: 8px; margin-bottom: 12px; padding: 20px 24px; box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12); }
+  .section-title { font-family: 'Google Sans', sans-serif; font-size: 18px; color: #673ab7; margin-bottom: 4px; border-bottom: 2px solid #ede7f6; padding-bottom: 8px; }
+  .section-title-ar { font-size: 18px; color: #000; direction: rtl; text-align: right; margin-bottom: 14px; }
+  .question-card { background: white; border-radius: 8px; margin-bottom: 12px; padding: 24px; box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12); transition: box-shadow .2s; border-left: 4px solid transparent; }
+  .question-card:focus-within { box-shadow: 0 4px 8px rgba(103,58,183,.15); border-left-color: #673ab7; }
+  .question-label { font-size: 15px; font-weight: 500; color: #202124; margin-bottom: 6px; line-height: 1.5; }
+  .question-label-ar { font-size: 16px; color: #000; direction: rtl; text-align: right; margin-bottom: 16px; font-style: italic; }
+
+  /* CHECKBOX */
+  .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; }
+  @media(max-width:560px){ .checkbox-grid { grid-template-columns: 1fr; } }
+  .checkbox-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; border-radius: 6px; cursor: pointer; transition: background .15s; }
+  .checkbox-item:hover { background: #f3e5f5; }
+  .checkbox-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: #673ab7; cursor: pointer; flex-shrink: 0; margin-top: 2px; }
+  .checkbox-item label { font-size: 13.5px; color: #333; cursor: pointer; line-height: 1.4; }
+  .checkbox-item label .ar { display: block; direction: rtl; font-size: 14px; color: #000; margin-top: 2px; }
+
+  /* RADIO */
+  .radio-group { display: flex; flex-direction: column; gap: 4px; }
+  .radio-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 6px; cursor: pointer; transition: background .15s; }
+  .radio-item:hover { background: #f3e5f5; }
+  .radio-item input[type="radio"] { width: 18px; height: 18px; accent-color: #673ab7; cursor: pointer; flex-shrink: 0; }
+  .radio-item label { font-size: 14px; color: #202124; cursor: pointer; line-height: 1.5; }
+  .radio-item label .ar { display: block; direction: rtl; font-size: 14px; color: #000; margin-top: 2px; }
+
+  /* INPUTS */
+  .text-input, .textarea-input { width: 100%; border: none; border-bottom: 1px solid #dadce0; padding: 8px 0; font-size: 14px; font-family: 'Roboto', sans-serif; color: #202124; outline: none; background: transparent; transition: border-color .2s; margin-bottom: 2px; }
+  .text-input:focus, .textarea-input:focus { border-bottom: 2px solid #673ab7; }
+  .textarea-input { resize: vertical; min-height: 80px; border: 1px solid #dadce0; border-radius: 4px; padding: 10px; margin-top: 8px; }
+  .textarea-input:focus { border: 1px solid #673ab7; border-bottom: 2px solid #673ab7; }
+  .conditional-field { display: none; margin-top: 10px; padding: 10px 14px; background: #f8f4ff; border-radius: 6px; border-left: 3px solid #9c27b0; }
+  .conditional-field.visible { display: block; }
+
+  /* BUTTONS */
+  .submit-area { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+  .btn-submit { background: #673ab7; color: white; border: none; border-radius: 4px; padding: 12px 28px; font-size: 14px; font-family: 'Google Sans', sans-serif; font-weight: 500; cursor: pointer; letter-spacing: .3px; transition: background .2s,box-shadow .2s; box-shadow: 0 2px 4px rgba(103,58,183,.4); }
+  .btn-submit:hover { background: #5e35b1; box-shadow: 0 4px 8px rgba(103,58,183,.4); }
+  .btn-clear { background: transparent; color: #673ab7; border: none; font-size: 14px; cursor: pointer; padding: 10px 0; font-family: 'Roboto', sans-serif; text-decoration: underline; }
+
+  /* SUCCESS */
+  .success-screen { display: none; background: white; border-radius: 8px; padding: 48px 32px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,.2); margin-top: 24px; }
+  .success-screen.visible { display: block; }
+  .success-icon { width: 72px; height: 72px; background: #673ab7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+  .success-icon svg { fill: white; }
+  .success-title { font-family: 'Google Sans', sans-serif; font-size: 24px; color: #202124; margin-bottom: 8px; }
+  .success-sub { font-size: 14px; color: #666; }
+  .note { font-size: 12px; color: #888; margin-top: 10px; font-style: italic; }
+
+  /* ===== ADMIN BUTTON (discreet) ===== */
+  #admin-btn {
+    position: fixed; bottom: 16px; right: 16px; z-index: 100;
+    width: 32px; height: 32px; border-radius: 50%; border: none;
+    background: rgba(103,58,183,.15); color: #673ab7; font-size: 16px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  #admin-btn:hover { background: rgba(103,58,183,.3); }
+
+  /* ===== OVERLAY ===== */
+  .overlay {
+    display: none; position: fixed; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,.55); z-index: 1000;
+    align-items: center; justify-content: center;
+  }
+  .overlay.open { display: flex; }
+
+  /* ===== LOGIN MODAL ===== */
+  .login-modal {
+    background: white; border-radius: 12px; padding: 36px 32px; width: 100%; max-width: 360px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.3); text-align: center;
+  }
+  .login-modal h2 { font-family: 'Google Sans', sans-serif; font-size: 22px; color: #202124; margin-bottom: 6px; }
+  .login-modal p { font-size: 13px; color: #888; margin-bottom: 24px; direction: rtl; }
+  .login-field { margin-bottom: 16px; text-align: left; }
+  .login-field label { font-size: 12px; color: #555; display: block; margin-bottom: 4px; }
+  .login-field input { width: 100%; border: 1px solid #dadce0; border-radius: 6px; padding: 10px 12px; font-size: 14px; outline: none; transition: border-color .2s; }
+  .login-field input:focus { border-color: #673ab7; }
+  .login-error { font-size: 12px; color: #d93025; margin-bottom: 12px; display: none; }
+  .login-error.show { display: block; }
+  .btn-login { width: 100%; background: #673ab7; color: white; border: none; border-radius: 6px; padding: 12px; font-size: 14px; font-family: 'Google Sans', sans-serif; cursor: pointer; transition: background .2s; margin-bottom: 10px; }
+  .btn-login:hover { background: #5e35b1; }
+  .btn-cancel-login { background: none; border: none; color: #888; font-size: 13px; cursor: pointer; text-decoration: underline; }
+
+  /* ===== DASHBOARD MODAL ===== */
+  .dashboard-modal {
+    background: #f5f5f5; border-radius: 12px; width: 100%; max-width: 900px;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 12px 40px rgba(0,0,0,.3);
+  }
+  .dash-header {
+    background: #673ab7; color: white; padding: 20px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .dash-header h2 { font-family: 'Google Sans', sans-serif; font-size: 20px; font-weight: 500; }
+  .dash-header .sub { font-size: 12px; opacity: .75; margin-top: 2px; direction: rtl; }
+  .btn-close-dash { background: rgba(255,255,255,.2); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s; }
+  .btn-close-dash:hover { background: rgba(255,255,255,.35); }
+
+  .dash-body { padding: 24px 28px; }
+
+  .dash-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-card { background: white; border-radius: 10px; padding: 18px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+  .stat-card .num { font-family: 'Google Sans', sans-serif; font-size: 38px; color: #673ab7; font-weight: 700; }
+  .stat-card .lbl { font-size: 12px; color: #888; margin-top: 4px; }
+
+  .dash-actions { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .btn-export { background: #2e7d32; color: white; border: none; border-radius: 6px; padding: 10px 18px; font-size: 13px; cursor: pointer; font-family: 'Google Sans', sans-serif; transition: background .2s; display: flex; align-items: center; gap: 6px; }
+  .btn-export:hover { background: #1b5e20; }
+  .btn-logout { background: transparent; color: #673ab7; border: 1px solid #673ab7; border-radius: 6px; padding: 10px 18px; font-size: 13px; cursor: pointer; font-family: 'Google Sans', sans-serif; transition: background .2s; }
+  .btn-logout:hover { background: #ede7f6; }
+  .btn-danger { background: #d93025; color: white; border: none; border-radius: 6px; padding: 10px 18px; font-size: 13px; cursor: pointer; font-family: 'Google Sans', sans-serif; transition: background .2s; }
+  .btn-danger:hover { background: #b71c1c; }
+
+  .section-lbl { font-family: 'Google Sans', sans-serif; font-size: 15px; color: #333; margin-bottom: 10px; font-weight: 500; }
+  .empty-msg { text-align: center; padding: 40px 0; color: #aaa; font-size: 14px; }
+
+  /* RESPONSE ROWS */
+  .resp-item { background: white; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.1); overflow: hidden; }
+  .resp-head { padding: 13px 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background .15s; }
+  .resp-head:hover { background: #fafafa; }
+  .resp-head .left { display: flex; flex-direction: column; gap: 3px; }
+  .resp-head .rnum { font-weight: 500; font-size: 13px; color: #333; }
+  .resp-head .rdate { font-size: 11px; color: #999; }
+  .resp-head .rtags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+  .rtag { background: #ede7f6; color: #673ab7; border-radius: 12px; padding: 2px 8px; font-size: 11px; }
+  .resp-head .arrow { font-size: 10px; color: #aaa; transition: transform .2s; flex-shrink: 0; }
+  .resp-head.open .arrow { transform: rotate(180deg); }
+  .resp-body { display: none; border-top: 1px solid #f0ebf8; padding: 16px; }
+  .resp-body.open { display: block; }
+  .resp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .resp-table th { text-align: left; color: #888; font-weight: 400; padding: 6px 10px; border-bottom: 1px solid #eee; width: 40%; }
+  .resp-table td { padding: 6px 10px; border-bottom: 1px solid #eee; color: #333; }
+  .resp-table tr:last-child th, .resp-table tr:last-child td { border-bottom: none; }
+
+  /* Satisfaction badge */
+  .sat-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+  .sat-tres { background: #e8f5e9; color: #2e7d32; }
+  .sat-ok { background: #e3f2fd; color: #1565c0; }
+  .sat-peu { background: #fff8e1; color: #f57f17; }
+  .sat-non { background: #ffebee; color: #c62828; }
+</style>
+</head>
+<body>
+
+<div class="container" style="padding-top:24px;">
+
+  <!-- HEADER -->
+  <div class="header-card">
+    <div class="header-content">
+      <div class="form-title">Questionnaire – Parties intéressées pertinentes</div>
+      <div style="font-size:13px;color:#888;margin-bottom:8px;">ISO 9001:2015 – §4.2</div>
+      <div class="form-title-ar">استبيان – الأطراف المعنية ذات الصلة (ISO 9001:2015 – الفقرة 4.2)</div>
+      <div class="form-subtitle">
+        Ce questionnaire vise à identifier et évaluer les parties intéressées pertinentes dans le cadre du système de management de la qualité.<br>
+        <span class="required-note">* Champ obligatoire</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="form-wrapper">
+
+    <!-- SECTION I -->
+    <div class="section-card">
+      <div class="section-title">I. Identification de la partie intéressée</div>
+      <div class="section-title-ar">I. تحديد الطرف المعني</div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-card">
+      <div class="question-label">1. Vous êtes : <span style="color:#d93025">*</span></div>
+      <div class="question-label-ar">أنتم:</div>
+      <div class="checkbox-grid">
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="etudiant"><label>Étudiant <span class="ar">طالب</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="soutien"><label>Services de soutien (œuvres sociales, CNAS, Postes, centre médical…) <span class="ar">مصالح الدعم</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="academique"><label>Personnel académique (enseignants-chercheurs) <span class="ar">الطاقم الأكاديمي</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="organisations"><label>Organisations estudiantines et clubs scientifiques <span class="ar">التنظيمات الطلابية</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="admin"><label>Personnel administratif et Technique <span class="ar">الطاقم الإداري والتقني</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="syndicats"><label>Partenaires Sociaux – syndicats <span class="ar">النقابات</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="direction"><label>Direction et niveaux de gouvernance <span class="ar">الإدارة ومستويات الحوكمة</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="audit"><label>Institutions de vérification et d'audit externe <span class="ar">هيئات التدقيق الخارجي</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="vitrines"><label>Vitrines (incubateurs, CDE, CATI, BLEU, Maison IA, FabLab…) <span class="ar">هياكل الدعم والواجهات</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="communaute"><label>Communauté locale et partenaires sociaux <span class="ar">المجتمع المحلي</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="parents"><label>Parents d'étudiants <span class="ar">أولياء الطلبة</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="medias"><label>Médias et opinion publique <span class="ar">وسائل الإعلام</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="alumni"><label>Anciens diplômés (alumni) <span class="ar">الخريجون القدامى</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="fournisseurs"><label>Fournisseurs et prestataires de services <span class="ar">الموردون ومقدمو الخدمات</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="tutelles"><label>Partenaires et tutelles institutionnelles <span class="ar">الهيئات الوصية المؤسساتية</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="financement"><label>Organismes de financement <span class="ar">هيئات التمويل</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="educatifs"><label>Partenaires éducatifs et académiques <span class="ar">الشركاء التربويون والأكاديميون</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="ong"><label>Organisations non gouvernementales (ONG) <span class="ar">المنظمات غير الحكومية</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="employeurs"><label>Employeurs et entreprises partenaires <span class="ar">أرباب العمل والمؤسسات الشريكة</span></label></label>
+        <label class="checkbox-item"><input type="checkbox" name="partie" value="autre" id="cb-autre"><label>Autre <span class="ar">أخرى</span></label></label>
+      </div>
+      <div class="conditional-field" id="autre-field">
+        <label style="font-size:13px;color:#555;">Précisez / يرجى التحديد :</label>
+        <input type="text" id="autre-text" class="text-input" placeholder="Autre partie intéressée…">
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-card">
+      <div class="question-label">2. Votre relation avec notre établissement est : <span style="color:#d93025">*</span></div>
+      <div class="question-label-ar">علاقتكم بمؤسستنا هي:</div>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="relation" value="directe"><label>Directe (interaction régulière) <span class="ar">مباشرة (تفاعل منتظم)</span></label></label>
+        <label class="radio-item"><input type="radio" name="relation" value="indirecte"><label>Indirecte (impacté(e) sans interaction directe) <span class="ar">غير مباشرة</span></label></label>
+      </div>
+    </div>
+
+    <!-- SECTION II -->
+    <div class="section-card">
+      <div class="section-title">II. Importance et pertinence</div>
+      <div class="section-title-ar">II. الأهمية والملاءمة</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-card">
+      <div class="question-label">3. À quel point votre rôle est-il impacté par nos activités ? <span style="color:#d93025">*</span></div>
+      <div class="question-label-ar">إلى أي مدى يتأثر دوركم بأنشطتنا؟</div>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="impact" value="fortement"><label>Fortement <span class="ar">بشكل كبير</span></label></label>
+        <label class="radio-item"><input type="radio" name="impact" value="moyennement"><label>Moyennement <span class="ar">بشكل متوسط</span></label></label>
+        <label class="radio-item"><input type="radio" name="impact" value="faiblement"><label>Faiblement <span class="ar">بشكل ضعيف</span></label></label>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-card">
+      <div class="question-label">4. Considérez-vous que votre avis doit être pris en compte dans nos décisions ? <span style="color:#d93025">*</span></div>
+      <div class="question-label-ar">هل ترون أن رأيكم يجب أن يؤخذ بعين الاعتبار في قراراتنا؟</div>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="avis" value="oui"><label>Oui <span class="ar">نعم</span></label></label>
+        <label class="radio-item"><input type="radio" name="avis" value="non"><label>Non <span class="ar">لا</span></label></label>
+      </div>
+    </div>
+
+    <!-- SECTION III -->
+    <div class="section-card">
+      <div class="section-title">III. Attentes et exigences</div>
+      <div class="section-title-ar">III. التوقعات والمتطلبات</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-card">
+      <div class="question-label">5. Quelles sont vos principales attentes ? <span style="font-weight:400;color:#666;">(5 attentes maximum)</span></div>
+      <div class="question-label-ar">ما هي أهم توقعاتكم؟ (اذكروا 5 توقعات كحد أقصى)</div>
+      <textarea id="q5" class="textarea-input" placeholder="Écrivez vos attentes ici… / اكتب توقعاتك هنا…" rows="5"></textarea>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-card">
+      <div class="question-label">6. Avez-vous des exigences spécifiques obligatoires ? <span style="color:#d93025">*</span></div>
+      <div class="question-label-ar">هل لديكم متطلبات خاصة إلزامية؟</div>
+      <p class="note">* Exigences = réglementaires, contractuelles ou implicites / المتطلبات = تنظيمية، تعاقدية أو ضمنية</p><br>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="exigences" value="oui" id="ex-oui"><label>Oui <span class="ar">نعم</span></label></label>
+        <label class="radio-item"><input type="radio" name="exigences" value="non"><label>Non <span class="ar">لا</span></label></label>
+      </div>
+      <div class="conditional-field" id="exigences-field">
+        <label style="font-size:13px;color:#555;">Précisez / يرجى التحديد :</label>
+        <input type="text" id="exigences-text" class="text-input" placeholder="Décrivez vos exigences…">
+      </div>
+    </div>
+
+    <!-- SECTION IV -->
+    <div class="section-card">
+      <div class="section-title">IV. Évaluation actuelle</div>
+      <div class="section-title-ar">IV. التقييم الحالي</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-card">
+      <div class="question-label">7. Nos services répondent-ils à vos attentes ? <span style="color:#d93025">*</span></div>
+      <div class="question-label-ar">هل تستجيب خدماتنا لتوقعاتكم؟</div>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="services" value="oui_totalement"><label>Oui totalement <span class="ar">نعم، بشكل كامل</span></label></label>
+        <label class="radio-item"><input type="radio" name="services" value="partiellement"><label>Partiellement <span class="ar">جزئياً</span></label></label>
+        <label class="radio-item"><input type="radio" name="services" value="non" id="srv-non"><label>Non <span class="ar">لا</span></label></label>
+      </div>
+      <div class="conditional-field" id="services-field">
+        <label style="font-size:13px;color:#555;">Si Non, pourquoi ? / في حالة "لا"، لماذا؟</label>
+        <input type="text" id="services-text" class="text-input" placeholder="Expliquez…">
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-card">
+      <div class="question-label">8. Niveau de satisfaction global : <span style="color:#d93025">*</span></div>
+      <div class="question-label-ar">مستوى الرضا العام:</div>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="satisfaction" value="tres_satisfait"><label>😊 Très satisfait <span class="ar">راضٍ جداً</span></label></label>
+        <label class="radio-item"><input type="radio" name="satisfaction" value="satisfait"><label>🙂 Satisfait <span class="ar">راضٍ</span></label></label>
+        <label class="radio-item"><input type="radio" name="satisfaction" value="peu_satisfait"><label>😐 Peu satisfait <span class="ar">قليل الرضا</span></label></label>
+        <label class="radio-item"><input type="radio" name="satisfaction" value="insatisfait"><label>😞 Insatisfait <span class="ar">غير راضٍ</span></label></label>
+      </div>
+    </div>
+
+    <!-- SECTION V -->
+    <div class="section-card">
+      <div class="section-title">V. Amélioration</div>
+      <div class="section-title-ar">V. التحسين</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question-card">
+      <div class="question-label">9. Quelles sont vos priorités d'amélioration ?</div>
+      <div class="question-label-ar">ما هي أولوياتكم في مجال التحسين؟</div>
+      <textarea id="q9" class="textarea-input" placeholder="Vos suggestions d'amélioration… / اقتراحاتكم للتحسين…" rows="4"></textarea>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="question-card">
+      <div class="submit-area">
+        <button class="btn-submit" onclick="submitForm()">Envoyer / إرسال</button>
+        <button class="btn-clear" onclick="clearForm()">Effacer les réponses / مسح الإجابات</button>
+      </div>
+    </div>
+
+  </div><!-- end form-wrapper -->
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="36" viewBox="0 0 24 24" width="36"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+    </div>
+    <div class="success-title">Votre réponse a été enregistrée.</div>
+    <div class="success-sub" style="margin-bottom:6px;">تم تسجيل إجابتكم بنجاح.</div>
+    <div class="success-sub">Merci pour votre participation ! / شكراً لمشاركتكم!</div>
+  </div>
+
+  <!-- ALREADY ANSWERED SCREEN -->
+  <div class="success-screen" id="already-screen" style="border-top: 6px solid #ff9800;">
+    <div style="font-size:56px;margin-bottom:16px;">⚠️</div>
+    <div class="success-title" style="color:#e65100;">Vous avez déjà participé.</div>
+    <div class="success-sub" style="margin-bottom:6px;color:#bf360c;">لقد شاركتم في هذا الاستبيان مسبقاً.</div>
+    <div class="success-sub">Une seule réponse est autorisée par participant.<br>يُسمح بإجابة واحدة فقط لكل مشارك.</div>
+  </div>
+
+</div><!-- end container -->
+
+<!-- Discreet admin button -->
+<button id="admin-btn" title="Administration" onclick="openAdminLogin()">⚙</button>
+
+<!-- ===== LOGIN OVERLAY ===== -->
+<div class="overlay" id="login-overlay">
+  <div class="login-modal">
+    <h2>🔐 Espace Admin</h2>
+    <p>لوحة تحكم المسؤول</p>
+    <div class="login-field">
+      <label>Nom d'utilisateur / اسم المستخدم</label>
+      <input type="text" id="login-user" placeholder="admin" autocomplete="off">
+    </div>
+    <div class="login-field">
+      <label>Mot de passe / كلمة المرور</label>
+      <input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter') doLogin()">
+    </div>
+    <div class="login-error" id="login-error">Identifiants incorrects / بيانات غير صحيحة</div>
+    <button class="btn-login" onclick="doLogin()">Se connecter / دخول</button>
+    <button class="btn-cancel-login" onclick="closeLogin()">Annuler / إلغاء</button>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD OVERLAY ===== -->
+<div class="overlay" id="dash-overlay">
+  <div class="dashboard-modal">
+    <div class="dash-header">
+      <div>
+        <h2>📊 Tableau de bord – Réponses</h2>
+        <div class="sub">لوحة تحكم – نتائج الاستبيان ISO 9001:2015 §4.2</div>
+      </div>
+      <button class="btn-close-dash" onclick="closeDash()">✕</button>
+    </div>
+    <div class="dash-body">
+
+      <!-- Stats -->
+      <div class="dash-stats">
+        <div class="stat-card">
+          <div class="num" id="stat-total">0</div>
+          <div class="lbl">Total réponses / إجمالي الإجابات</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" id="stat-sat">—</div>
+          <div class="lbl">Satisfaction dominante / الرضا السائد</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" id="stat-today">0</div>
+          <div class="lbl">Aujourd'hui / اليوم</div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="dash-actions">
+        <button class="btn-export" onclick="exportCSV()">⬇ Exporter CSV / تصدير CSV</button>
+        <button class="btn-logout" onclick="logout()">🔓 Déconnexion / خروج</button>
+        <button class="btn-danger" onclick="deleteAll()">🗑 Supprimer tout / حذف الكل</button>
+      </div>
+
+      <!-- Responses -->
+      <div class="section-lbl">Liste des réponses / قائمة الإجابات</div>
+      <div id="resp-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== ALREADY ANSWERED CHECK =====
+const ANSWERED_KEY = 'iso9001_already_answered';
+
+function checkAlreadyAnswered() {
+  if (localStorage.getItem(ANSWERED_KEY) === 'yes') {
+    document.getElementById('form-wrapper').style.display = 'none';
+    document.getElementById('already-screen').classList.add('visible');
+  }
+}
+
+// Run on page load
+window.addEventListener('DOMContentLoaded', checkAlreadyAnswered);
+
+// ===== GOOGLE SHEETS API =====
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzHrRH7F2LyNjRFTpu-ImvsL07HY3BMHiRLmm-bdwIoEV9K0hwlJYHxqZbtxaWTFZo/exec';
+
+async function sendToSheet(data) {
+  await fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+}
+
+async function loadFromSheet() {
+  try {
+    const res = await fetch(SCRIPT_URL + '?action=getAll');
+    const json = await res.json();
+    return json.data || [];
+  } catch(e) { return []; }
+}
+
+// ===== FORM CONDITIONALS =====
+document.getElementById('cb-autre').addEventListener('change', function() {
+  document.getElementById('autre-field').classList.toggle('visible', this.checked);
+});
+
+document.querySelectorAll('input[name="exigences"]').forEach(function(r) {
+  r.addEventListener('change', function() {
+    document.getElementById('exigences-field').classList.toggle('visible', this.value === 'oui');
+  });
+});
+
+document.querySelectorAll('input[name="services"]').forEach(function(r) {
+  r.addEventListener('change', function() {
+    document.getElementById('services-field').classList.toggle('visible', this.value === 'non');
+  });
+});
+
+// ===== SUBMIT =====
+async function submitForm() {
+  const required = [
+    { name: 'relation', label: 'Question 2 (relation)' },
+    { name: 'impact',   label: 'Question 3 (impact)' },
+    { name: 'avis',     label: 'Question 4 (avis)' },
+    { name: 'exigences',label: 'Question 6 (exigences)' },
+    { name: 'services', label: 'Question 7 (services)' },
+    { name: 'satisfaction', label: 'Question 8 (satisfaction)' },
+  ];
+
+  const checked = document.querySelectorAll('input[name="partie"]:checked');
+  if (checked.length === 0) {
+    alert('Veuillez sélectionner au moins une option pour la Question 1.\nيرجى اختيار خيار واحد على الأقل للسؤال الأول.');
+    return;
+  }
+
+  for (const field of required) {
+    const val = document.querySelector(`input[name="${field.name}"]:checked`);
+    if (!val) {
+      alert(`Veuillez répondre à ${field.label}.\nيرجى الإجابة على ${field.label}.`);
+      return;
+    }
+  }
+
+  const parties = Array.from(document.querySelectorAll('input[name="partie"]:checked')).map(i => i.value);
+  const response = {
+    date: new Date().toLocaleString('fr-FR'),
+    q1_parties: parties.join('; '),
+    q1_autre: document.getElementById('autre-text').value.trim(),
+    q2_relation: document.querySelector('input[name="relation"]:checked').value,
+    q3_impact: document.querySelector('input[name="impact"]:checked').value,
+    q4_avis: document.querySelector('input[name="avis"]:checked').value,
+    q5_attentes: document.getElementById('q5').value.trim(),
+    q6_exigences: document.querySelector('input[name="exigences"]:checked').value,
+    q6_detail: document.getElementById('exigences-text').value.trim(),
+    q7_services: document.querySelector('input[name="services"]:checked').value,
+    q7_detail: document.getElementById('services-text').value.trim(),
+    q8_satisfaction: document.querySelector('input[name="satisfaction"]:checked').value,
+    q9_amelioration: document.getElementById('q9').value.trim(),
+  };
+
+  const btn = document.querySelector('.btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Envoi en cours… / جاري الإرسال…';
+
+  try {
+    await sendToSheet(response);
+    localStorage.setItem(ANSWERED_KEY, 'yes');
+    document.getElementById('form-wrapper').style.display = 'none';
+    document.getElementById('success-screen').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch(e) {
+    alert('Erreur de connexion. Vérifiez votre internet.\nخطأ في الاتصال، تحقق من الإنترنت.');
+    btn.disabled = false;
+    btn.textContent = 'Envoyer / إرسال';
+  }
+}
+
+function clearForm() {
+  if (confirm('Effacer toutes les réponses ?\nمسح جميع الإجابات؟')) {
+    document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(i => i.checked = false);
+    document.querySelectorAll('input[type="text"], textarea').forEach(i => i.value = '');
+    document.querySelectorAll('.conditional-field').forEach(f => f.classList.remove('visible'));
+  }
+}
+
+// newResponse disabled — one response per participant only
+
+// ===== ADMIN LOGIN =====
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'ISOISO9001';
+let adminLoggedIn = false;
+
+function openAdminLogin() {
+  if (adminLoggedIn) { openDash(); return; }
+  document.getElementById('login-overlay').classList.add('open');
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  document.getElementById('login-error').classList.remove('show');
+  setTimeout(() => document.getElementById('login-user').focus(), 100);
+}
+
+function closeLogin() {
+  document.getElementById('login-overlay').classList.remove('open');
+}
+
+function doLogin() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value;
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    adminLoggedIn = true;
+    closeLogin();
+    openDash();
+  } else {
+    document.getElementById('login-error').classList.add('show');
+    document.getElementById('login-pass').value = '';
+    document.getElementById('login-pass').focus();
+  }
+}
+
+function logout() {
+  adminLoggedIn = false;
+  closeDash();
+}
+
+// ===== DASHBOARD =====
+function openDash() {
+  renderDash();
+  document.getElementById('dash-overlay').classList.add('open');
+}
+
+function closeDash() {
+  document.getElementById('dash-overlay').classList.remove('open');
+}
+
+function renderDash() {
+  document.getElementById('stat-total').textContent = '📊';
+  document.getElementById('stat-sat').textContent = '—';
+  document.getElementById('stat-today').textContent = '—';
+  document.getElementById('resp-list').innerHTML = `
+    <div style="background:#ede7f6;border-radius:10px;padding:28px;text-align:center;">
+      <div style="font-size:36px;margin-bottom:12px;">📋</div>
+      <div style="font-family:'Google Sans',sans-serif;font-size:17px;color:#4527a0;margin-bottom:8px;">Les réponses sont enregistrées dans Google Sheets</div>
+      <div style="font-size:13px;color:#7e57c2;direction:rtl;margin-bottom:16px;">الإجابات محفوظة مباشرة في Google Sheets</div>
+      <a href="${SCRIPT_URL.replace('/exec','')}" target="_blank" style="display:none"></a>
+      <button onclick="openSheet()" class="btn-export" style="margin:auto;">📂 Ouvrir Google Sheets / فتح الجدول</button>
+    </div>`;
+}
+function openSheet() {
+  window.open('https://docs.google.com/spreadsheets/', '_blank');
+}
+function _renderDash_unused() {
+  const responses = [];
+  document.getElementById('stat-total').textContent = responses.length;
+
+  // Today count
+  const today = new Date().toDateString();
+  const todayCount = responses.filter(r => new Date(r.date).toDateString() === today).length;
+  document.getElementById('stat-today').textContent = todayCount;
+
+  // Dominant satisfaction
+  if (responses.length > 0) {
+    const satMap = {};
+    responses.forEach(r => { satMap[r.q8_satisfaction] = (satMap[r.q8_satisfaction] || 0) + 1; });
+    const dom = Object.entries(satMap).sort((a,b)=>b[1]-a[1])[0][0];
+    const satLabels = { tres_satisfait: '😊', satisfait: '🙂', peu_satisfait: '😐', insatisfait: '😞' };
+    document.getElementById('stat-sat').textContent = satLabels[dom] || '—';
+  } else {
+    document.getElementById('stat-sat').textContent = '—';
+  }
+
+  // List
+  const list = document.getElementById('resp-list');
+  if (responses.length === 0) {
+    list.innerHTML = '<div class="empty-msg">Aucune réponse enregistrée. / لا توجد إجابات مسجلة.</div>';
+    return;
+  }
+
+  const partieLabels = {
+    etudiant:'Étudiant', soutien:'Services de soutien', academique:'Personnel académique',
+    organisations:'Organisations estudiantines', admin:'Personnel admin./tech.',
+    syndicats:'Syndicats', direction:'Direction', audit:'Audit externe',
+    vitrines:'Vitrines', communaute:'Communauté locale', parents:"Parents d'étudiants",
+    medias:'Médias', alumni:'Alumni', fournisseurs:'Fournisseurs',
+    tutelles:'Tutelles', financement:'Financement', educatifs:'Partenaires éducatifs',
+    ong:'ONG', employeurs:'Employeurs', autre:'Autre'
+  };
+
+  const satClass = { tres_satisfait:'sat-tres', satisfait:'sat-ok', peu_satisfait:'sat-peu', insatisfait:'sat-non' };
+  const satLabel = { tres_satisfait:'😊 Très satisfait', satisfait:'🙂 Satisfait', peu_satisfait:'😐 Peu satisfait', insatisfait:'😞 Insatisfait' };
+
+  list.innerHTML = responses.slice().reverse().map((r, idx) => {
+    const num = responses.length - idx;
+    const dateStr = new Date(r.date).toLocaleString('fr-FR');
+    const tags = r.q1_parties.map(p => `<span class="rtag">${partieLabels[p]||p}</span>`).join('');
+
+    return `
+    <div class="resp-item">
+      <div class="resp-head" onclick="toggleResp(this)">
+        <div class="left">
+          <span class="rnum">Réponse #${num}</span>
+          <span class="rdate">${dateStr}</span>
+          <div class="rtags">${tags}</div>
+        </div>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="resp-body">
+        <table class="resp-table">
+          <tr><th>Q1 – Partie(s)</th><td>${r.q1_parties.map(p=>partieLabels[p]||p).join(', ')}${r.q1_autre?' ('+r.q1_autre+')':''}</td></tr>
+          <tr><th>Q2 – Relation</th><td>${r.q2_relation === 'directe' ? 'Directe' : 'Indirecte'}</td></tr>
+          <tr><th>Q3 – Impact</th><td>${{fortement:'Fortement',moyennement:'Moyennement',faiblement:'Faiblement'}[r.q3_impact]||r.q3_impact}</td></tr>
+          <tr><th>Q4 – Avis pris en compte</th><td>${r.q4_avis === 'oui' ? 'Oui' : 'Non'}</td></tr>
+          <tr><th>Q5 – Attentes</th><td>${r.q5_attentes || '—'}</td></tr>
+          <tr><th>Q6 – Exigences</th><td>${r.q6_exigences === 'oui' ? 'Oui' : 'Non'}${r.q6_detail?' : '+r.q6_detail:''}</td></tr>
+          <tr><th>Q7 – Services</th><td>${{oui_totalement:'Oui totalement',partiellement:'Partiellement',non:'Non'}[r.q7_services]||r.q7_services}${r.q7_detail?' : '+r.q7_detail:''}</td></tr>
+          <tr><th>Q8 – Satisfaction</th><td><span class="sat-badge ${satClass[r.q8_satisfaction]||''}">${satLabel[r.q8_satisfaction]||r.q8_satisfaction}</span></td></tr>
+          <tr><th>Q9 – Amélioration</th><td>${r.q9_amelioration || '—'}</td></tr>
+        </table>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleResp(head) {
+  head.classList.toggle('open');
+  const body = head.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ===== EXPORT CSV =====
+// Data is in Google Sheets — export directly from there
+
+function exportCSV() {
+  alert('Pour exporter, ouvrez Google Sheets et utilisez : Fichier → Télécharger → CSV\nللتصدير، افتح Google Sheets واستخدم: ملف ← تنزيل ← CSV');
+  openSheet();
+}
+
+// ===== DELETE ALL =====
+function deleteAll() {
+  alert('Pour supprimer des réponses, veuillez le faire directement dans Google Sheets.\nلحذف الإجابات، يرجى القيام بذلك مباشرة في Google Sheets.');
+  openSheet();
+}
+
+// Close overlays on backdrop click
+document.getElementById('login-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeLogin();
+});
+document.getElementById('dash-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeDash();
+});
+</script>
+
+</body>
+</html>
